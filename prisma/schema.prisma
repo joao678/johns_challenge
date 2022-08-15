@@ -1,18 +1,39 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Publication {
+    id          String   @id @default(uuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    name        String
+    author_name String
+    qty         Int
+    type        Int
+    rentals     Rental[]
+}
+
+model Rental {
+    id            String      @id @default(uuid())
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+    publication   Publication @relation(fields: [publicationId], references: [id])
+    publicationId String      @default(uuid())
+    person        Person      @relation(fields: [personId], references: [id])
+    personId      String      @default(uuid())
 }
 
 model Person {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-  password  String
-  is_employee Boolean  @default(false)
-  //author    User     @relation(fields: [authorId], references: [id])
+    id          String   @id @default(uuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    name        String
+    password    String
+    is_employee Boolean  @default(false)
+    rentals     Rental[]
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient, Person } from '@prisma/client'
-import { PersonDto } from 'src/Controllers/Dtos/PersonDto';
+import { PersonDto } from 'src/Controllers/Person/Dtos/PersonDto';
 import * as bcrypt from 'bcrypt';
-import PersonInsertValidation from 'src/Controllers/Validations/PersonInsert.validation';
+import PersonInsertValidation from 'src/Controllers/Person/Validations/PersonInsert.validation';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +11,7 @@ export class PersonService {
     async insertPerson(personDto: PersonDto): Promise<Object | Person> {
         try {
             const personInsertValidation = PersonInsertValidation(personDto);
-            if(personInsertValidation.length) throw personInsertValidation;
+            if (personInsertValidation.length) throw personInsertValidation;
 
             return await prisma.person.create({
                 data: {
@@ -19,7 +19,7 @@ export class PersonService {
                     password: await bcrypt.hash(personDto.password, 10),
                     is_employee: personDto.is_employee
                 }
-            });    
+            });
         } catch (error) {
             return { errorMessages: error }
         }
@@ -27,13 +27,13 @@ export class PersonService {
 
     async deletePerson(id: string): Promise<Person> {
         try {
-            return await prisma.person.delete({where: { id: id }})    
+            return await prisma.person.delete({ where: { id: id } })
         } catch (error) {
             return error
         }
     }
 
-    async getAllPeople(): Promise<Person[]> {
+    async getAllPerson(): Promise<Person[]> {
         return await prisma.person.findMany();
     }
 }
