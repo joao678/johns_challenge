@@ -22,6 +22,8 @@ model Rental {
     id            String      @id @default(uuid())
     createdAt     DateTime    @default(now())
     updatedAt     DateTime    @updatedAt
+    dueDate       DateTime
+    returned      Boolean     @default(false)
     publication   Publication @relation(fields: [publicationId], references: [id])
     publicationId String      @default(uuid())
     person        Person      @relation(fields: [personId], references: [id])
