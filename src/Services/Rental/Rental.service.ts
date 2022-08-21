@@ -15,6 +15,8 @@ export class RentalService {
             const publication = await prisma.publication.findFirst({ where: { id: rentalDto.publicationId } });
             const person = await prisma.person.findFirst({ where: { id: rentalDto.personId } });
 
+            rentalDto.dueDate = new Date(rentalDto.dueDate);
+
             const rentalInsertValidation = RentalInsertValidation(rentalDto, publication, person);
             if (rentalInsertValidation.length) throw rentalInsertValidation;
 

@@ -13,8 +13,8 @@ export class RentalController {
     }
 
     @Post()
-    async insertRental(@Body() publicationDto: RentalDto): Promise<Object> {
-        const result = await this.rentalService.insertRental(publicationDto),
+    async insertRental(@Body() rentalDto: RentalDto): Promise<Object> {
+        const result = await this.rentalService.insertRental(rentalDto),
             errors = result as { errorMessages: string[] };
 
         if (errors.errorMessages && errors.errorMessages.length) throw new HttpException(errors.errorMessages, HttpStatus.BAD_REQUEST);
