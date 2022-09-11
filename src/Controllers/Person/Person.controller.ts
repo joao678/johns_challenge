@@ -1,9 +1,11 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Person } from '@prisma/client';
 import { PersonService } from 'src/Services/Person/Person.service';
 import { PersonDto } from './Dtos/PersonDto';
 
 @Controller('person')
+@ApiTags('person')
 export class PersonController {
     constructor(private readonly personService: PersonService) { }
 

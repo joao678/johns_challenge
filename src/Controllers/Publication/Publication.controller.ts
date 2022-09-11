@@ -1,9 +1,11 @@
 import { Body, Controller, Delete, Get, Header, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Publication } from '@prisma/client';
 import { PublicationService } from 'src/Services/Publication/Publication.service';
 import { PublicationDto } from './Dtos/PublicationDto';
 
 @Controller('publication')
+@ApiTags('publication')
 export class PublicationController {
     constructor(private readonly publicationService: PublicationService) { }
 

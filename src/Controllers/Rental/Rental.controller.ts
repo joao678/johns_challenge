@@ -1,9 +1,11 @@
 import { Body, Controller, Delete, Get, Header, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Rental } from '@prisma/client';
 import { RentalService } from 'src/Services/Rental/Rental.service';
 import { RentalDto } from './Dtos/RentalDto';
 
 @Controller('rental')
+@ApiTags('rental')
 export class RentalController {
     constructor(private readonly rentalService: RentalService) { }
 
@@ -13,7 +15,7 @@ export class RentalController {
     }
 
     @Post()
-    async insertRental(@Body() rentalDto: RentalDto): Promise<Object> {
+    async rent(@Body() rentalDto: RentalDto): Promise<Object> {
         const result = await this.rentalService.insertRental(rentalDto),
             errors = result as { errorMessages: string[] };
 

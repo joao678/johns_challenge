@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient, Publication } from '@prisma/client';
 import { PublicationDto } from 'src/Controllers/Publication/Dtos/PublicationDto';
+import { PublicationType } from 'src/Controllers/Publication/Enums/PublicationTypes.enum';
 import PublicationInsertValidation from 'src/Controllers/Publication/Validations/PublicationInsert.validation';
 
 const prisma = new PrismaClient();
@@ -17,7 +18,7 @@ export class PublicationService {
                     name: publicationDto.name,
                     author_name: publicationDto.author_name,
                     qty: publicationDto.qty,
-                    type: publicationDto.type
+                    type: PublicationType[publicationDto.type] as unknown as number
                 }
             });
         } catch (error) {
